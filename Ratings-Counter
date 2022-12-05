@@ -1,1 +1,19 @@
 
+#This is the code for counting ratings 
+
+from pyspark import SparkConf, SparkContext
+import collections
+
+def parseline(line):
+    list = line.split()
+    rating = list[2]
+    return rating
+
+lines = sc.textfile("C:\sparkcourse\ml-100k\u.data")
+mapping = lines.map(parseline)
+result = mapping.countByValue()
+
+sortedResults = collections.OrderedDict(sorted(result.items()))
+for key, value in sortedResults.items():
+    print("%s %i" % (key, value))
+
